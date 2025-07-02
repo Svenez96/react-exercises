@@ -13,8 +13,6 @@ const TodoList = ({todos}) => {
         setSearchTerm(e.target.value);
     }, []);
 
-
-
     const filteredTodos = useFilteredTodos(data || [], searchTerm);
     
     if (loading) return <p>Loading...</p>;
