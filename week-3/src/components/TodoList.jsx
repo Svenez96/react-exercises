@@ -1,10 +1,8 @@
 import { useCallback, useState, useMemo, useRef, useEffect} from "react";
-import { useFetch } from "../hooks/useFetch";
-
-const API_URL = 'https://jsonplaceholder.typicode.com/todos';
+import { useTodos } from "../context/TodoContext";
 
 const TodoList = () => {
-    const { data, loading, error } = useFetch(API_URL);
+    const { todos, loading, error } = useTodos();
     const [searchTerm, setSearchTerm] = useState("");
     const inputRef = useRef(null);
     
@@ -14,11 +12,11 @@ const TodoList = () => {
     }, []);
     
     const filteredTodos = useMemo(() => {
-        if (!data) return [];
-        return data.filter(todo =>
+        if (!todos) return [];
+        return todos.filter(todo =>
             todo.title.toLowerCase().includes(searchTerm.toLowerCase())
         );
-    }, [data, searchTerm]);
+    }, [todos, searchTerm]);
     
     useEffect(() => {
         if(inputRef.current){
@@ -28,8 +26,6 @@ const TodoList = () => {
     
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error: {error}</p>;
-    if (!data) return null;
-    
 
     return (
         <>
