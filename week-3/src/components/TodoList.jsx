@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { useCallback, useState, useMemo, useRef, useEffect} from "react";
 import { useTodos } from "../context/TodoContext";
 
@@ -7,7 +8,6 @@ const TodoList = () => {
     const inputRef = useRef(null);
     
     const handleSearchChange = useCallback((e) => {
-        console.log("handleSearchChange triggered");
         setSearchTerm(e.target.value);
     }, []);
     
@@ -34,7 +34,9 @@ const TodoList = () => {
                     placeholder="Search" />
                 <ul>
                     {filteredTodos.map((item) => (
-                        <li key={item.id}>{item.title}</li>
+                        <li key={item.id}>
+                           <Link to={`/todo/${item.id}`}>{item.title}</Link> 
+                        </li>
                     ))}
                 </ul>
             </div>
