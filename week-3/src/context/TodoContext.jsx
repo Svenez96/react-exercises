@@ -15,7 +15,7 @@ export const TodoProvider = ({children}) => {
 
     return (
         <TodoContext.Provider value={{ todos, setTodos, loading, error }}>
-          {children}
+            {children}
         </TodoContext.Provider>
       );
 }

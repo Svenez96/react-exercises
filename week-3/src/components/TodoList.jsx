@@ -29,14 +29,15 @@ const TodoList = () => {
 
     return (
         <>
-            <input type="text" ref={inputRef} value={searchTerm} onChange={handleSearchChange}
-                placeholder="Search" />
-            <ul>
-                {filteredTodos.map((item) => (
-                    <li key={item.id}>{item.title}</li>
-                ))}
-            </ul>
-            
+            <div className="todo-list">
+                <input type="text" ref={inputRef} value={searchTerm} onChange={handleSearchChange}
+                    placeholder="Search" />
+                <ul>
+                    {filteredTodos.map((item) => (
+                        <li key={item.id}>{item.title}</li>
+                    ))}
+                </ul>
+            </div>
         </>
     )
 }

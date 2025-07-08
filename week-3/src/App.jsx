@@ -7,7 +7,6 @@ const App = () => {
   return (
     <>
       <TodoProvider>
-        <h1>Todo List</h1>
         <TodoList />
       </TodoProvider>
     </>
