@@ -1,15 +1,26 @@
-import { Link } from "react-router-dom";
-import { useCallback, useState, useMemo, useRef, useEffect} from "react";
+import { Link, useSearchParams} from "react-router-dom";
+import { useCallback, useMemo, useRef, useEffect} from "react";
 import { useTodos } from "../context/TodoContext";
 
 const TodoList = () => {
     const { todos, loading, error } = useTodos();
-    const [searchTerm, setSearchTerm] = useState("");
+    const [searchParams, setSearchParams] = useSearchParams();
     const inputRef = useRef(null);
+
+    const searchTerm = searchParams.get("search") || "";
     
-    const handleSearchChange = useCallback((e) => {
-        setSearchTerm(e.target.value);
-    }, []);
+    const handleSearchInput = useCallback((e) => {
+        const value = e.target.value;
+        const newParams = new URLSearchParams(searchParams);
+    
+        if (value) {
+            newParams.set("search", value);
+        } else {
+            newParams.delete("search");
+        }
+    
+        setSearchParams(newParams);
+    }, [searchParams, setSearchParams]);
     
     const filteredTodos = useMemo(() => {
         if (!todos) return [];
@@ -30,7 +41,7 @@ const TodoList = () => {
     return (
         <>
             <div className="todo-list">
-                <input type="text" ref={inputRef} value={searchTerm} onChange={handleSearchChange}
+                <input type="text" ref={inputRef} value={searchTerm} onInput={handleSearchInput}
                     placeholder="Search" />
                 <ul>
                     {filteredTodos.map((item) => (
